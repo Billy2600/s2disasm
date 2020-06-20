@@ -4066,10 +4066,11 @@ TitleScreen_Loop:
     else
 	move.w #emerald_hill_zone_act_1,(Current_ZoneAndAct).w
     endif
-	tst.b	(Level_select_flag).w	; has level select cheat been entered?
-	beq.s	+			; if not, branch
-	btst	#button_A,(Ctrl_1_Held).w ; is A held down?
-	beq.s	+	 		; if not, branch
+	;Temporary, make level select auto-enabled
+	;tst.b	(Level_select_flag).w	; has level select cheat been entered?
+	;beq.s	+			; if not, branch
+	;btst	#button_A,(Ctrl_1_Held).w ; is A held down?
+	;beq.s	+	 		; if not, branch
 	move.b	#GameModeID_LevelSelect,(Game_Mode).w ; => LevelSelectMenu
 	rts
 ; ---------------------------------------------------------------------------
@@ -12283,7 +12284,8 @@ level_select_cheat:	dc.b $19, $65,   9, $17,   0	; 17th September 1965, Yuji Nak
 ; byte_97B7
 continues_cheat:	dc.b   1,   1,   2,   4,   0	; 24th November, Sonic 2's release date in the EU and US: "Sonic 2sday"
 	rev02even
-debug_cheat:		dc.b   1,   9,   9,   2,   1,   1,   2,   4,   0	; 24th November 1992, Sonic 2's release date in the EU and US: "Sonic 2sday"
+	;Let's make the debug cheat easier
+debug_cheat:		dc.b   1,   0   ;9,   9,   2,   1,   1,   2,   4,   0	; 24th November 1992, Sonic 2's release date in the EU and US: "Sonic 2sday"
 	rev02even
 ; byte_97C5
 super_sonic_cheat:	dc.b   4,   1,   2,   6,   0	; Book of Genesis, 41:26
