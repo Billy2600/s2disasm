@@ -11935,7 +11935,7 @@ LevelSelect_Order:
 	dc.w	sky_chase_zone_act_1	; 17
 	dc.w	wing_fortress_zone_act_1	; 18
 	dc.w	death_egg_zone_act_1	; 19
-	dc.w	$4000	; 20 - special stage
+	dc.w	hidden_palace_zone_act_1 ;$4000	; 20 - special stage
 	dc.w	$FFFF	; 21 - sound test
 ; ===========================================================================
 
@@ -41496,7 +41496,7 @@ Obj79_Star:
 	beq.w	loc_1F554
 	andi.b	#1,d0
 	beq.s	+
-	move.w	#casino_night_zone_act_1,(Current_ZoneAndAct).w
+	move.w	#hidden_palace_zone_act_1,(Current_ZoneAndAct).w
 	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
 	jmp 	Level
 +
@@ -86691,11 +86691,11 @@ ColP_MTZ:	BINCLUDE	"collision/MTZ primary 16x16 collision index.bin"
 	even
 ;---------------------------------------------------------------------------------------
 ; HPZ primary 16x16 collision index (Kosinski compression)
-ColP_HPZ:	;BINCLUDE	"collision/HPZ primary 16x16 collision index.bin"
+ColP_HPZ:	BINCLUDE	"collision/HPZ primary 16x16 collision index.bin"
 	;even
 ;---------------------------------------------------------------------------------------
 ; HPZ secondary 16x16 collision index (Kosinski compression)
-ColS_HPZ:	;BINCLUDE	"collision/HPZ secondary 16x16 collision index.bin"
+ColS_HPZ:	BINCLUDE	"collision/HPZ secondary 16x16 collision index.bin"
 	;even
 ;---------------------------------------------------------------------------------------
 ; OOZ primary 16x16 collision index (Kosinski compression)
@@ -87990,13 +87990,13 @@ ArtKos_MTZ:	BINCLUDE	"art/kosinski/MTZ.bin"
 BM128_MTZ:	BINCLUDE	"mappings/128x128/MTZ.bin"
 ;-----------------------------------------------------------------------------------
 ; HPZ 16x16 block mappings (Kosinski compression)
-BM16_HPZ:	;BINCLUDE	"mappings/16x16/HPZ.bin"
+BM16_HPZ:	BINCLUDE	"mappings/16x16/HPZ.bin"
 ;-----------------------------------------------------------------------------------
 ; HPZ main level patterns (Kosinski compression)
-ArtKos_HPZ:	;BINCLUDE	"art/kosinski/HPZ.bin"
+ArtKos_HPZ:	BINCLUDE	"art/kosinski/HPZ.bin"
 ;-----------------------------------------------------------------------------------
 ; HPZ 128x128 block mappings (Kosinski compression)
-BM128_HPZ:	;BINCLUDE	"mappings/128x128/HPZ.bin"
+BM128_HPZ:	BINCLUDE	"mappings/128x128/HPZ.bin"
 ;-----------------------------------------------------------------------------------
 ; OOZ 16x16 block mappings (Kosinski compression)
 BM16_OOZ:	BINCLUDE	"mappings/16x16/OOZ.bin"
