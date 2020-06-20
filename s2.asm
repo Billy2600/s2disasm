@@ -41494,8 +41494,9 @@ Obj79_Star:
 	beq.w	loc_1F554
 	andi.b	#1,d0
 	beq.s	+
-	move.b	#1,(SpecialStage_flag_2P).w
-	move.b	#GameModeID_SpecialStage,(Game_Mode).w ; => SpecialStage
+	move.w	#casino_night_zone_act_1,(Current_ZoneAndAct).w
+	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
+	jmp 	Level
 +
 	clr.b	collision_property(a0)
 
