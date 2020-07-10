@@ -2407,7 +2407,7 @@ PalCycle_Load:
 ; off_19F4:
 PalCycle: zoneOrderedOffsetTable 2,1
 	zoneOffsetTableEntry.w PalCycle_EHZ	; 0
-	zoneOffsetTableEntry.w PalCycle_Null	; 1
+	zoneOffsetTableEntry.w PalCycle_CNZ	; 1
 	zoneOffsetTableEntry.w PalCycle_WZ	; 2
 	zoneOffsetTableEntry.w PalCycle_Null	; 3
 	zoneOffsetTableEntry.w PalCycle_MTZ	; 4
@@ -4226,7 +4226,7 @@ JmpTo_SwScrl_Title ; JmpTo
 ; byte_3EA0:
 MusicList: zoneOrderedTable 1,1
 	zoneTableEntry.b MusID_EHZ	; 0 ; EHZ
-	zoneTableEntry.b MusID_EHZ	; 1
+	zoneTableEntry.b MusID_CNZ	; 1
 	zoneTableEntry.b MusID_MTZ	; 2
 	zoneTableEntry.b MusID_OOZ	; 3
 	zoneTableEntry.b MusID_MTZ	; 4 ; MTZ1,2
@@ -5337,7 +5337,7 @@ LoadCollisionIndexes:
 ; ---------------------------------------------------------------------------
 Off_ColP: zoneOrderedTable 4,1
 	zoneTableEntry.l ColP_EHZHTZ
-	zoneTableEntry.l ColP_Invalid	; 1
+	zoneTableEntry.l ColP_CNZ	; 1
 	zoneTableEntry.l ColP_MTZ	; 2
 	zoneTableEntry.l ColP_Invalid	; 3
 	zoneTableEntry.l ColP_MTZ	; 4
@@ -5364,7 +5364,7 @@ Off_ColP: zoneOrderedTable 4,1
 ; ---------------------------------------------------------------------------
 Off_ColS: zoneOrderedTable 4,1
 	zoneTableEntry.l ColS_EHZHTZ
-	zoneTableEntry.l ColP_Invalid	; 1
+	zoneTableEntry.l ColS_CNZ	; 1
 	zoneTableEntry.l ColP_MTZ	; 2
 	zoneTableEntry.l ColP_Invalid	; 3
 	zoneTableEntry.l ColP_MTZ	; 4
@@ -11935,7 +11935,7 @@ LevelSelect_Order:
 	dc.w	sky_chase_zone_act_1	; 17
 	dc.w	wing_fortress_zone_act_1	; 18
 	dc.w	death_egg_zone_act_1	; 19
-	dc.w	hidden_palace_zone_act_1 ;$4000	; 20 - special stage
+	dc.w	pinball_stage_act_1 ;$4000	; 20 - special stage
 	dc.w	$FFFF	; 21 - sound test
 ; ===========================================================================
 
@@ -14194,7 +14194,7 @@ LevelSize: zoneOrderedTable 2,8	; WrdArr_LvlSize
 StartLocations: zoneOrderedTable 2,4	; WrdArr_StartLoc
 	zoneTableBinEntry	2, "startpos/EHZ_1.bin"	; $00
 	zoneTableBinEntry	2, "startpos/EHZ_2.bin"
-	zoneTableEntry.w	$60,	$28F		; $01
+	zoneTableBinEntry	2, "startpos/CNZ_1.bin"	; $01
 	zoneTableEntry.w	$60,	$2AF
 	zoneTableEntry.w	$60,	$1AC		; $02
 	zoneTableEntry.w	$60,	$1AC
@@ -14256,7 +14256,7 @@ InitCameraValues:
 ; off_C296:
 InitCam_Index: zoneOrderedOffsetTable 2,1
 	zoneOffsetTableEntry.w InitCam_EHZ
-	zoneOffsetTableEntry.w InitCam_Null0	; 1
+	zoneOffsetTableEntry.w InitCam_CNZ	; 1
 	zoneOffsetTableEntry.w InitCam_WZ	; 2
 	zoneOffsetTableEntry.w InitCam_Null0	; 3
 	zoneOffsetTableEntry.w InitCam_Std	; 4 MTZ
@@ -14549,7 +14549,7 @@ loc_C4D0:
 ; ---------------------------------------------------------------------------
 SwScrl_Index: zoneOrderedOffsetTable 2,1	; JmpTbl_SwScrlMgr
 	zoneOffsetTableEntry.w SwScrl_EHZ	; $00
-	zoneOffsetTableEntry.w SwScrl_Minimal	; $01
+	zoneOffsetTableEntry.w SwScrl_CNZ	; $01
 	zoneOffsetTableEntry.w SwScrl_Lev2	; $02
 	zoneOffsetTableEntry.w SwScrl_Minimal	; $03
 	zoneOffsetTableEntry.w SwScrl_MTZ	; $04
@@ -25427,7 +25427,7 @@ Obj34_LoadStandardWaterAndAnimalArt:
 ;byte_13F62:
 Animal_PLCTable: zoneOrderedTable 1,1
 	zoneTableEntry.b PLCID_EhzAnimals	; $0
-	zoneTableEntry.b PLCID_EhzAnimals	; $1
+	zoneTableEntry.b PLCID_CnzAnimals	; $1
 	zoneTableEntry.b PLCID_EhzAnimals	; $2
 	zoneTableEntry.b PLCID_EhzAnimals	; $3
 	zoneTableEntry.b PLCID_MtzAnimals	; $4
@@ -26856,7 +26856,7 @@ loc_1581A:
 ; byte_15820:
 Off_TitleCardLetters:
 	dc.b TitleCardLetters_EHZ - TitleCardLetters	; 0
-	dc.b TitleCardLetters_EHZ - TitleCardLetters	; 1
+	dc.b TitleCardLetters_PBS - TitleCardLetters	; 1
 	dc.b TitleCardLetters_EHZ - TitleCardLetters	; 2
 	dc.b TitleCardLetters_EHZ - TitleCardLetters	; 3
 	dc.b TitleCardLetters_MTZ - TitleCardLetters	; 4
@@ -26913,6 +26913,8 @@ TitleCardLetters_WFZ:
 	titleLetters	"WING FORTRESS"
 TitleCardLetters_DEZ:
 	titleLetters	"DEATH EGG"
+TitleCardLetters_PBS:
+	titleLetters	"SPECIAL"
 
  charset ; revert character set
 
@@ -41496,7 +41498,8 @@ Obj79_Star:
 	beq.w	loc_1F554
 	andi.b	#1,d0
 	beq.s	+
-	move.w	#hidden_palace_zone_act_1,(Current_ZoneAndAct).w
+	; Warp to pinball stage
+	move.w	#pinball_stage_act_1,(Current_ZoneAndAct).w
 	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
 	jmp 	Level
 +
@@ -82506,8 +82509,8 @@ PLC_DYNANM: zoneOrderedOffsetTable 2,2		; Zone ID
 	zoneOffsetTableEntry.w Dynamic_Normal	; $00
 	zoneOffsetTableEntry.w Animated_EHZ
 
-	zoneOffsetTableEntry.w Dynamic_Null	; $01
-	zoneOffsetTableEntry.w Animated_Null
+	zoneOffsetTableEntry.w Dynamic_CNZ	; $01
+	zoneOffsetTableEntry.w Animated_CNZ
 
 	zoneOffsetTableEntry.w Dynamic_Null	; $02
 	zoneOffsetTableEntry.w Animated_Null
@@ -83252,7 +83255,7 @@ LoadLevelBlocks_2P:
 ; off_40350:
 AnimPatMaps: zoneOrderedOffsetTable 2,1
 	zoneOffsetTableEntry.w APM_EHZ		;  0
-	zoneOffsetTableEntry.w APM_Null		;  1
+	zoneOffsetTableEntry.w APM_CNZ		;  1
 	zoneOffsetTableEntry.w APM_Null		;  2
 	zoneOffsetTableEntry.w APM_Null		;  3
 	zoneOffsetTableEntry.w APM_MTZ		;  4
@@ -85204,7 +85207,7 @@ LoadDebugObjectSprite:
 ; ---------------------------------------------------------------------------
 JmpTbl_DbgObjLists: zoneOrderedOffsetTable 2,1
 	zoneOffsetTableEntry.w DbgObjList_EHZ	; 0
-	zoneOffsetTableEntry.w DbgObjList_Def	; 1
+	zoneOffsetTableEntry.w DbgObjList_CNZ	; 1
 	zoneOffsetTableEntry.w DbgObjList_Def	; 2
 	zoneOffsetTableEntry.w DbgObjList_Def	; 3
 	zoneOffsetTableEntry.w DbgObjList_MTZ	; 4
@@ -85592,7 +85595,7 @@ cur_zone_str := "\{cur_zone_id}"
 ; dword_42594: MainLoadBlocks: saArtPtrs:
 LevelArtPointers:
 	levartptrs PLCID_Ehz1,     PLCID_Ehz2,      PalID_EHZ,  ArtKos_EHZ, BM16_EHZ, BM128_EHZ ;   0 ; EHZ  ; EMERALD HILL ZONE
-	levartptrs PLCID_Miles1up, PLCID_MilesLife, PalID_EHZ2, ArtKos_EHZ, BM16_EHZ, BM128_EHZ ;   1 ; LEV1 ; LEVEL 1 (UNUSED)
+	levartptrs PLCID_Cnz1, 	   PLCID_Cnz1, 		PalID_CNZ,  ArtKos_CNZ, BM16_CNZ, BM128_CNZ ;   1 ; LEV1 ; PINBALL STAGE
 	levartptrs PLCID_Tails1up, PLCID_TailsLife, PalID_WZ,   ArtKos_EHZ, BM16_EHZ, BM128_EHZ ;   2 ; LEV2 ; LEVEL 2 (UNUSED)
 	levartptrs PLCID_Unused1,  PLCID_Unused2,   PalID_EHZ3, ArtKos_EHZ, BM16_EHZ, BM128_EHZ ;   3 ; LEV3 ; LEVEL 3 (UNUSED)
 	levartptrs PLCID_Mtz1,     PLCID_Mtz2,      PalID_MTZ,  ArtKos_MTZ, BM16_MTZ, BM128_MTZ ;   4 ; MTZ  ; METROPOLIS ZONE ACTS 1 & 2
@@ -86752,7 +86755,7 @@ ColP_Invalid:
 Off_Level: zoneOrderedOffsetTable 2,2
 	zoneOffsetTableEntry.w Level_EHZ1
 	zoneOffsetTableEntry.w Level_EHZ2	; 1
-	zoneOffsetTableEntry.w Level_EHZ1	; 2
+	zoneOffsetTableEntry.w Level_CNZ1	; 2
 	zoneOffsetTableEntry.w Level_EHZ1	; 3
 	zoneOffsetTableEntry.w Level_EHZ1	; 4
 	zoneOffsetTableEntry.w Level_EHZ1	; 5
@@ -88466,7 +88469,7 @@ Rings_SCZ_2:	BINCLUDE	"level/rings/SCZ_2.bin"
 Off_Objects: zoneOrderedOffsetTable 2,2
 	zoneOffsetTableEntry.w  Objects_EHZ_1	; 0  $00
 	zoneOffsetTableEntry.w  Objects_EHZ_2	; 1
-	zoneOffsetTableEntry.w  Objects_Null	; 2  $01
+	zoneOffsetTableEntry.w  Objects_CNZ_1	; 2  $01
 	zoneOffsetTableEntry.w  Objects_Null	; 3
 	zoneOffsetTableEntry.w  Objects_Null	; 4  $02
 	zoneOffsetTableEntry.w  Objects_Null	; 5

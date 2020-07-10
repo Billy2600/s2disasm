@@ -265,7 +265,7 @@ cur_zone_str := "\{cur_zone_id}"
 
 ; Zone IDs. These MUST be declared in the order in which their IDs are in stock Sonic 2, otherwise zone offset tables will screw up
 emerald_hill_zone zoneID	$00
-zone_1 zoneID			$01
+pinball_stage zoneID			$01
 wood_zone zoneID		$02
 zone_3 zoneID			$03
 metropolis_zone zoneID		$04
@@ -313,6 +313,8 @@ wood_zone_act_1 =		(wood_zone<<8)|$00
 wood_zone_act_2 =		(wood_zone<<8)|$01
 hidden_palace_zone_act_1 =	(hidden_palace_zone<<8)|$00
 hidden_palace_zone_act_2 =	(hidden_palace_zone<<8)|$01
+; Pinball Stage
+pinball_stage_act_1 =		(pinball_stage<<8)|$00
 
 ; ---------------------------------------------------------------------------
 ; some variables and functions to help define those constants (redefined before a new set of IDs)
