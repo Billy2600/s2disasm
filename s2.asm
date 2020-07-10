@@ -14194,7 +14194,7 @@ LevelSize: zoneOrderedTable 2,8	; WrdArr_LvlSize
 StartLocations: zoneOrderedTable 2,4	; WrdArr_StartLoc
 	zoneTableBinEntry	2, "startpos/EHZ_1.bin"	; $00
 	zoneTableBinEntry	2, "startpos/EHZ_2.bin"
-	zoneTableBinEntry	2, "startpos/CNZ_1.bin"	; $01
+	zoneTableBinEntry	2, "startpos/PBS.bin"	; $01
 	zoneTableEntry.w	$60,	$2AF
 	zoneTableEntry.w	$60,	$1AC		; $02
 	zoneTableEntry.w	$60,	$1AC
@@ -86755,7 +86755,7 @@ ColP_Invalid:
 Off_Level: zoneOrderedOffsetTable 2,2
 	zoneOffsetTableEntry.w Level_EHZ1
 	zoneOffsetTableEntry.w Level_EHZ2	; 1
-	zoneOffsetTableEntry.w Level_CNZ1	; 2
+	zoneOffsetTableEntry.w Level_PBS	; 2
 	zoneOffsetTableEntry.w Level_EHZ1	; 3
 	zoneOffsetTableEntry.w Level_EHZ1	; 4
 	zoneOffsetTableEntry.w Level_EHZ1	; 5
@@ -86872,6 +86872,10 @@ Level_ARZ2:	BINCLUDE	"level/layout/ARZ_2.bin"
 ;---------------------------------------------------------------------------------------
 ; SCZ level layout (Kosinski compression)
 Level_SCZ:	BINCLUDE	"level/layout/SCZ.bin"
+	even
+;---------------------------------------------------------------------------------------
+; PBS level layout (Kosinski compression)
+Level_PBS:	BINCLUDE	"level/layout/PBS.bin"
 	even
 
 
@@ -88469,7 +88473,7 @@ Rings_SCZ_2:	BINCLUDE	"level/rings/SCZ_2.bin"
 Off_Objects: zoneOrderedOffsetTable 2,2
 	zoneOffsetTableEntry.w  Objects_EHZ_1	; 0  $00
 	zoneOffsetTableEntry.w  Objects_EHZ_2	; 1
-	zoneOffsetTableEntry.w  Objects_CNZ_1	; 2  $01
+	zoneOffsetTableEntry.w  Objects_PBS		; 2  $01
 	zoneOffsetTableEntry.w  Objects_Null	; 3
 	zoneOffsetTableEntry.w  Objects_Null	; 4  $02
 	zoneOffsetTableEntry.w  Objects_Null	; 5
@@ -88582,7 +88586,7 @@ Objects_SCZ_2:	BINCLUDE	"level/objects/SCZ_2.bin"
 	ObjectLayoutBoundary
 Objects_Null:
 	ObjectLayoutBoundary
-	; Another strange space for a layout
+Objects_PBS:	BINCLUDE	"level/objects/PBS.bin"
 	ObjectLayoutBoundary
 	; And another
 	ObjectLayoutBoundary
