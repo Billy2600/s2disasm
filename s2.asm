@@ -4226,7 +4226,7 @@ JmpTo_SwScrl_Title ; JmpTo
 ; byte_3EA0:
 MusicList: zoneOrderedTable 1,1
 	zoneTableEntry.b MusID_EHZ	; 0 ; EHZ
-	zoneTableEntry.b MusID_CNZ	; 1
+	zoneTableEntry.b MusID_CNZ_2P	; 1
 	zoneTableEntry.b MusID_MTZ	; 2
 	zoneTableEntry.b MusID_OOZ	; 3
 	zoneTableEntry.b MusID_MTZ	; 4 ; MTZ1,2
@@ -14140,6 +14140,8 @@ LevelSize: zoneOrderedTable 2,8	; WrdArr_LvlSize
 
 ; ===========================================================================
 +
+	cmp.w	#pinball_stage_act_1, (Current_ZoneAndAct).w ; Is this the "pinball stage"?
+	beq.s   + ; If yes, branch to not load star pole data
 	tst.b	(Last_star_pole_hit).w		; was a star pole hit yet?
 	beq.s	+				; if not, branch
 	jsr	(Obj79_LoadData).l		; load the previously saved data
@@ -33212,8 +33214,11 @@ Obj01_Init:
 	move.w	#$600,(Sonic_top_speed).w	; set Sonic's top speed
 	move.w	#$C,(Sonic_acceleration).w	; set Sonic's acceleration
 	move.w	#$80,(Sonic_deceleration).w	; set Sonic's deceleration
+	cmp.w	#pinball_stage_act_1, (Current_ZoneAndAct).w ; Is this the "pinball stage"?
+	beq.s   Obj01_Init_NotCheckpoint ; If yes, ignore star pole stuff
 	tst.b	(Last_star_pole_hit).w
 	bne.s	Obj01_Init_Continued
+Obj01_Init_NotCheckpoint:
 	; only happens when not starting at a checkpoint:
 	move.w	#make_art_tile(ArtTile_ArtUnc_Sonic,0,0),art_tile(a0)
 	bsr.w	Adjust2PArtPointer
@@ -35814,8 +35819,11 @@ Obj02_Init:
 	move.w	#$80,(Tails_deceleration).w	; set Tails' deceleration
 	cmpi.w	#2,(Player_mode).w
 	bne.s	Obj02_Init_2Pmode
+	cmp.w	#pinball_stage_act_1, (Current_ZoneAndAct).w ; Is this the "pinball stage"?
+	beq.s   Obj02_Init_NotCheckpoint ; If yes, ignore star pole stuff
 	tst.b	(Last_star_pole_hit).w
 	bne.s	Obj02_Init_Continued
+Obj02_Init_NotCheckpoint:
 	; only happens when not starting at a checkpoint:
 	move.w	#make_art_tile(ArtTile_ArtUnc_Tails,0,0),art_tile(a0)
 	bsr.w	Adjust2PArtPointer
@@ -41500,8 +41508,8 @@ Obj79_Star:
 	beq.s	+
 	; Warp to pinball stage
 	move.w	#pinball_stage_act_1,(Current_ZoneAndAct).w
-	move.b	#GameModeID_Level,(Game_Mode).w ; => Level (Zone play mode)
-	jmp 	Level
+	move.w   #1,(Level_Inactive_flag).w
+	rts
 +
 	clr.b	collision_property(a0)
 
